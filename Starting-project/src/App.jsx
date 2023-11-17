@@ -6,7 +6,7 @@ import { useState } from "react";
 import { EXAMPLES } from "./data.js";
 
 function App() {
-  const [selectedToppic, setSelectedTopic] = useState("components");
+  const [selectedToppic, setSelectedTopic] = useState();
 
   function handleClick(selectedButton) {
     //selectedButton => 'Components', 'JSX', 'Props', 'States'
@@ -14,6 +14,19 @@ function App() {
     setSelectedTopic(selectedButton);
     return;
   }
+
+  let tabContent = <p>Please Select a topic : </p> 
+
+  if (selectedToppic){ 
+    tabContent = <div id="tab-content">
+            <h3>{EXAMPLES[selectedToppic].title}</h3>
+            <p>{EXAMPLES[selectedToppic].description}</p>
+            <pre>
+              <code>{EXAMPLES[selectedToppic].code}</code>
+            </pre>
+          </div>
+  }
+  
 
   return (
     <div>
@@ -37,13 +50,8 @@ function App() {
             <TabButtons onSelect={() => handleClick("props")}>Props</TabButtons>
             <TabButtons onSelect={() => handleClick("state")}>State</TabButtons>
           </menu>
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedToppic].title}</h3>
-            <p>{EXAMPLES[selectedToppic].description}</p>
-            <pre>
-              <code>{EXAMPLES[selectedToppic].code}</code>
-            </pre>
-          </div>
+          {tabContent}
+            
         </section>
       </main>
     </div>
